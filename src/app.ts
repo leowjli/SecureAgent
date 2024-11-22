@@ -30,7 +30,6 @@ const getChangesPerFile = async (payload: WebhookEventMap["pull_request"]) => {
     console.dir({ files }, { depth: null });
     return files;
   } catch (exc) {
-    console.log("exc");
     return [];
   }
 };
