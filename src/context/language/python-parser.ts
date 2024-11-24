@@ -52,6 +52,11 @@ export class PythonParser implements AbstractParser {
     let largestEnclosingContext: Node | null = null;
     let largestSize = 0;
     const traverseAST = (node: Node) => {
+      // check if node is valid
+      if (node.children) {
+        // Traverse the children nodes
+        node.children.forEach((child) => traverseAST(child));
+      }
       // check if the node is a current function or a class
       if (node.type === 'FunctionDef' || node.type === 'ClassDef') {
         ({ largestSize, largestEnclosingContext } = processNode(
@@ -62,9 +67,6 @@ export class PythonParser implements AbstractParser {
           largestEnclosingContext
         ));
       }
-
-      // Traverse the children nodes
-      node.children.forEach((child) => traverseAST(child));
     };
 
     traverseAST(rootNode);
